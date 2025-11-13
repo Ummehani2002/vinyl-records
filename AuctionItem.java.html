@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>AuctionItem.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+AuctionItem.java</font>
+</center></td></tr></table>
+<pre><span class="s0">public abstract class </span><span class="s1">AuctionItem </span><span class="s2">{</span>
+    <span class="s0">private </span><span class="s1">String id</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">YearRange yearRange</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">String owner</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">String condition</span><span class="s2">;</span>
+    <span class="s0">private double </span><span class="s1">startingPrice</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">AuctionItem</span><span class="s2">(</span><span class="s1">String id</span><span class="s2">, </span><span class="s1">YearRange yearRange</span><span class="s2">, </span><span class="s1">String owner</span><span class="s2">, </span><span class="s1">String condition</span><span class="s2">, </span><span class="s0">double </span><span class="s1">startingPrice</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">id </span><span class="s2">= </span><span class="s1">id</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">yearRange </span><span class="s2">= </span><span class="s1">yearRange</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">owner </span><span class="s2">= </span><span class="s1">owner</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">condition </span><span class="s2">= </span><span class="s1">condition</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">startingPrice </span><span class="s2">= </span><span class="s1">startingPrice</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public </span><span class="s1">String getId</span><span class="s2">() { </span><span class="s0">return </span><span class="s1">id</span><span class="s2">; }</span>
+    <span class="s0">public </span><span class="s1">YearRange getYearRange</span><span class="s2">() { </span><span class="s0">return </span><span class="s1">yearRange</span><span class="s2">; }</span>
+    <span class="s0">public </span><span class="s1">String getOwner</span><span class="s2">() { </span><span class="s0">return </span><span class="s1">owner</span><span class="s2">; }</span>
+    <span class="s0">public </span><span class="s1">String getCondition</span><span class="s2">() { </span><span class="s0">return </span><span class="s1">condition</span><span class="s2">; }</span>
+    <span class="s0">public double </span><span class="s1">getStartingPrice</span><span class="s2">() { </span><span class="s0">return </span><span class="s1">startingPrice</span><span class="s2">; }</span>
+
+    <span class="s0">public abstract </span><span class="s1">String shortDescription</span><span class="s2">();</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">String toString</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">String</span><span class="s2">.</span><span class="s1">format</span><span class="s2">(</span><span class="s3">&quot;[%s] %s | Year: %s | Owner: %s | Condition: %s | Start: $%.2f&quot;</span><span class="s2">,</span>
+                <span class="s1">id</span><span class="s2">, </span><span class="s1">getClass</span><span class="s2">().</span><span class="s1">getSimpleName</span><span class="s2">(), </span><span class="s1">yearRange</span><span class="s2">, </span><span class="s1">owner</span><span class="s2">, </span><span class="s1">condition</span><span class="s2">, </span><span class="s1">startingPrice</span><span class="s2">);</span>
+    <span class="s2">}</span>
+    <span class="s0">public void </span><span class="s1">setCondition</span><span class="s2">(</span><span class="s1">String condition</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">condition </span><span class="s2">= </span><span class="s1">condition</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">setStartingPrice</span><span class="s2">(</span><span class="s0">double </span><span class="s1">startingPrice</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">startingPrice </span><span class="s2">= </span><span class="s1">startingPrice</span><span class="s2">;</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

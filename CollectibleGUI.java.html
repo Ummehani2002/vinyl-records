@@ -1,0 +1,160 @@
+<html>
+<head>
+<title>CollectibleGUI.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #2aacb8;}
+.s5 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+CollectibleGUI.java</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">javax</span><span class="s2">.</span><span class="s1">swing</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.</span><span class="s1">event</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">List</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">ArrayList</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Comparator</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">CollectibleGUI </span><span class="s0">extends </span><span class="s1">JFrame </span><span class="s2">{</span>
+    <span class="s0">private </span><span class="s1">AuctionInventory inventory</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">DefaultListModel</span><span class="s2">&lt;</span><span class="s1">AuctionItem</span><span class="s2">&gt; </span><span class="s1">listModel</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">JList</span><span class="s2">&lt;</span><span class="s1">AuctionItem</span><span class="s2">&gt; </span><span class="s1">itemList</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">CollectibleGUI</span><span class="s2">(</span><span class="s1">AuctionInventory inventory</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">inventory </span><span class="s2">= </span><span class="s1">inventory</span><span class="s2">;</span>
+
+        <span class="s1">setTitle</span><span class="s2">(</span><span class="s3">&quot;Collectible Inventory System&quot;</span><span class="s2">);</span>
+        <span class="s1">setSize</span><span class="s2">(</span><span class="s4">800</span><span class="s2">, </span><span class="s4">450</span><span class="s2">);</span>
+        <span class="s1">setDefaultCloseOperation</span><span class="s2">(</span><span class="s1">JFrame</span><span class="s2">.</span><span class="s1">EXIT_ON_CLOSE</span><span class="s2">);</span>
+        <span class="s1">setLayout</span><span class="s2">(</span><span class="s0">new </span><span class="s1">BorderLayout</span><span class="s2">(</span><span class="s4">10</span><span class="s2">, </span><span class="s4">10</span><span class="s2">));</span>
+
+        <span class="s5">// ----- Item List -----</span>
+        <span class="s1">listModel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">DefaultListModel</span><span class="s2">&lt;&gt;();</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">AuctionItem item </span><span class="s2">: </span><span class="s1">inventory</span><span class="s2">.</span><span class="s1">getItems</span><span class="s2">()) {</span>
+            <span class="s1">listModel</span><span class="s2">.</span><span class="s1">addElement</span><span class="s2">(</span><span class="s1">item</span><span class="s2">);</span>
+        <span class="s2">}</span>
+
+        <span class="s1">itemList </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JList</span><span class="s2">&lt;&gt;(</span><span class="s1">listModel</span><span class="s2">);</span>
+        <span class="s1">itemList</span><span class="s2">.</span><span class="s1">setSelectionMode</span><span class="s2">(</span><span class="s1">ListSelectionModel</span><span class="s2">.</span><span class="s1">SINGLE_SELECTION</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">JScrollPane</span><span class="s2">(</span><span class="s1">itemList</span><span class="s2">), </span><span class="s1">BorderLayout</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">);</span>
+
+        <span class="s5">// ----- Button Panel -----</span>
+        <span class="s1">JPanel btnPanel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">();</span>
+        <span class="s1">btnPanel</span><span class="s2">.</span><span class="s1">setLayout</span><span class="s2">(</span><span class="s0">new </span><span class="s1">FlowLayout</span><span class="s2">(</span><span class="s1">FlowLayout</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">, </span><span class="s4">10</span><span class="s2">, </span><span class="s4">10</span><span class="s2">));</span>
+
+        <span class="s1">JButton moreInfo </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s3">&quot;More Info&quot;</span><span class="s2">);</span>
+        <span class="s1">JButton edit </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s3">&quot;Edit&quot;</span><span class="s2">);</span>
+        <span class="s1">JButton sortID </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s3">&quot;Sort by ID&quot;</span><span class="s2">);</span>
+        <span class="s1">JButton sortPrice </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s3">&quot;Sort by Price&quot;</span><span class="s2">);</span>
+        <span class="s1">JButton sortYear </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s3">&quot;Sort by Year&quot;</span><span class="s2">);</span>
+        <span class="s1">JButton summary </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s3">&quot;Generate Summary&quot;</span><span class="s2">);</span>
+        <span class="s1">JButton save </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s3">&quot;Save CSV&quot;</span><span class="s2">);</span>
+        <span class="s1">JButton exit </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s3">&quot;Exit&quot;</span><span class="s2">);</span>
+
+        <span class="s1">btnPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">moreInfo</span><span class="s2">);</span>
+        <span class="s1">btnPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">edit</span><span class="s2">);</span>
+        <span class="s1">btnPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">sortID</span><span class="s2">);</span>
+        <span class="s1">btnPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">sortPrice</span><span class="s2">);</span>
+        <span class="s1">btnPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">sortYear</span><span class="s2">);</span>
+        <span class="s1">btnPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">summary</span><span class="s2">);</span>
+        <span class="s1">btnPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">save</span><span class="s2">);</span>
+        <span class="s1">btnPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">exit</span><span class="s2">);</span>
+
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">btnPanel</span><span class="s2">, </span><span class="s1">BorderLayout</span><span class="s2">.</span><span class="s1">SOUTH</span><span class="s2">);</span>
+
+        <span class="s5">// ----- Button Actions -----</span>
+
+        <span class="s5">// Show full details</span>
+        <span class="s1">moreInfo</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s1">e -&gt; showItemDetails</span><span class="s2">());</span>
+
+        <span class="s5">// Edit condition and price</span>
+        <span class="s1">edit</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s1">e -&gt; editItem</span><span class="s2">());</span>
+
+        <span class="s5">// Sorting buttons</span>
+        <span class="s1">sortID</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s1">e -&gt; sortItems</span><span class="s2">(</span><span class="s1">Comparator</span><span class="s2">.</span><span class="s1">comparing</span><span class="s2">(</span><span class="s1">AuctionItem::getId</span><span class="s2">)));</span>
+        <span class="s1">sortPrice</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s1">e -&gt; sortItems</span><span class="s2">(</span><span class="s1">Comparator</span><span class="s2">.</span><span class="s1">comparingDouble</span><span class="s2">(</span><span class="s1">AuctionItem::getStartingPrice</span><span class="s2">)));</span>
+        <span class="s1">sortYear</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s1">e -&gt; sortItems</span><span class="s2">(</span><span class="s1">Comparator</span><span class="s2">.</span><span class="s1">comparingInt</span><span class="s2">(</span><span class="s1">i -&gt; i</span><span class="s2">.</span><span class="s1">getYearRange</span><span class="s2">().</span><span class="s1">getMidYear</span><span class="s2">())));</span>
+
+        <span class="s5">// Generate summary file</span>
+        <span class="s1">summary</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s1">e -&gt; </span><span class="s2">{</span>
+            <span class="s1">inventory</span><span class="s2">.</span><span class="s1">writeSummary</span><span class="s2">(</span><span class="s3">&quot;summary.txt&quot;</span><span class="s2">);</span>
+            <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s3">&quot;✅ Summary file written successfully!&quot;</span><span class="s2">, </span><span class="s3">&quot;Summary&quot;</span><span class="s2">, </span><span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">INFORMATION_MESSAGE</span><span class="s2">);</span>
+        <span class="s2">});</span>
+
+        <span class="s5">// Save updates back to CSV</span>
+        <span class="s1">save</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s1">e -&gt; </span><span class="s2">{</span>
+            <span class="s1">inventory</span><span class="s2">.</span><span class="s1">saveToCSV</span><span class="s2">(</span><span class="s3">&quot;collectibles.csv&quot;</span><span class="s2">);</span>
+            <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s3">&quot;✅ Data saved to collectibles.csv&quot;</span><span class="s2">, </span><span class="s3">&quot;Save Successful&quot;</span><span class="s2">, </span><span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">INFORMATION_MESSAGE</span><span class="s2">);</span>
+        <span class="s2">});</span>
+
+        <span class="s5">// Exit</span>
+        <span class="s1">exit</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s1">e -&gt; System</span><span class="s2">.</span><span class="s1">exit</span><span class="s2">(</span><span class="s4">0</span><span class="s2">));</span>
+
+        <span class="s1">setVisible</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s5">// ----- Sort Helper -----</span>
+    <span class="s0">private void </span><span class="s1">sortItems</span><span class="s2">(</span><span class="s1">Comparator</span><span class="s2">&lt;</span><span class="s1">AuctionItem</span><span class="s2">&gt; </span><span class="s1">comparator</span><span class="s2">) {</span>
+        <span class="s1">List</span><span class="s2">&lt;</span><span class="s1">AuctionItem</span><span class="s2">&gt; </span><span class="s1">sorted </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ArrayList</span><span class="s2">&lt;&gt;(</span><span class="s1">inventory</span><span class="s2">.</span><span class="s1">getItems</span><span class="s2">());</span>
+        <span class="s1">sorted</span><span class="s2">.</span><span class="s1">sort</span><span class="s2">(</span><span class="s1">comparator</span><span class="s2">);</span>
+        <span class="s1">listModel</span><span class="s2">.</span><span class="s1">clear</span><span class="s2">();</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">AuctionItem item </span><span class="s2">: </span><span class="s1">sorted</span><span class="s2">) {</span>
+            <span class="s1">listModel</span><span class="s2">.</span><span class="s1">addElement</span><span class="s2">(</span><span class="s1">item</span><span class="s2">);</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s5">// ----- More Info -----</span>
+    <span class="s0">private void </span><span class="s1">showItemDetails</span><span class="s2">() {</span>
+        <span class="s1">AuctionItem selected </span><span class="s2">= </span><span class="s1">itemList</span><span class="s2">.</span><span class="s1">getSelectedValue</span><span class="s2">();</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">selected </span><span class="s2">== </span><span class="s0">null</span><span class="s2">) {</span>
+            <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s3">&quot;Please select an item first.&quot;</span><span class="s2">);</span>
+            <span class="s0">return</span><span class="s2">;</span>
+        <span class="s2">}</span>
+        <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span>
+                <span class="s0">this</span><span class="s2">,</span>
+                <span class="s1">selected</span><span class="s2">.</span><span class="s1">toString</span><span class="s2">(),</span>
+                <span class="s3">&quot;Item Details&quot;</span><span class="s2">,</span>
+                <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">INFORMATION_MESSAGE</span>
+        <span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s5">// ----- Edit Item -----</span>
+    <span class="s0">private void </span><span class="s1">editItem</span><span class="s2">() {</span>
+        <span class="s1">AuctionItem selected </span><span class="s2">= </span><span class="s1">itemList</span><span class="s2">.</span><span class="s1">getSelectedValue</span><span class="s2">();</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">selected </span><span class="s2">== </span><span class="s0">null</span><span class="s2">) {</span>
+            <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s3">&quot;Select an item to edit.&quot;</span><span class="s2">);</span>
+            <span class="s0">return</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">String newCondition </span><span class="s2">= </span><span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showInputDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s3">&quot;Enter new condition:&quot;</span><span class="s2">, </span><span class="s1">selected</span><span class="s2">.</span><span class="s1">getCondition</span><span class="s2">());</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">newCondition </span><span class="s2">== </span><span class="s0">null </span><span class="s2">|| </span><span class="s1">newCondition</span><span class="s2">.</span><span class="s1">isBlank</span><span class="s2">()) </span><span class="s0">return</span><span class="s2">;</span>
+
+            <span class="s1">String newPriceStr </span><span class="s2">= </span><span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showInputDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s3">&quot;Enter new starting price:&quot;</span><span class="s2">, </span><span class="s1">selected</span><span class="s2">.</span><span class="s1">getStartingPrice</span><span class="s2">());</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">newPriceStr </span><span class="s2">== </span><span class="s0">null </span><span class="s2">|| </span><span class="s1">newPriceStr</span><span class="s2">.</span><span class="s1">isBlank</span><span class="s2">()) </span><span class="s0">return</span><span class="s2">;</span>
+
+            <span class="s0">double </span><span class="s1">newPrice </span><span class="s2">= </span><span class="s1">Double</span><span class="s2">.</span><span class="s1">parseDouble</span><span class="s2">(</span><span class="s1">newPriceStr</span><span class="s2">);</span>
+            <span class="s1">selected</span><span class="s2">.</span><span class="s1">setCondition</span><span class="s2">(</span><span class="s1">newCondition</span><span class="s2">);</span>
+            <span class="s1">selected</span><span class="s2">.</span><span class="s1">setStartingPrice</span><span class="s2">(</span><span class="s1">newPrice</span><span class="s2">);</span>
+
+            <span class="s5">// Refresh the list display</span>
+            <span class="s1">itemList</span><span class="s2">.</span><span class="s1">repaint</span><span class="s2">();</span>
+            <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s3">&quot;✅ Item updated successfully!&quot;</span><span class="s2">);</span>
+
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">NumberFormatException ex</span><span class="s2">) {</span>
+            <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s3">&quot;⚠️ Invalid price format. Please enter a number.&quot;</span><span class="s2">);</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>
